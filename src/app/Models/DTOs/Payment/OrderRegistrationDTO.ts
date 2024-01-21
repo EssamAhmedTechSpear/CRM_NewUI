@@ -1,0 +1,31 @@
+export class OrderRegistrationDTO {
+  id: number;
+  auth_token: string;
+  delivery_needed: boolean;
+  amount_cents: number;
+  currency: string;
+  created_at: string;
+  merchant: any;
+  collector: any;
+  shipping_data: any;
+  is_payment_locked: boolean;
+  is_return: boolean;
+  is_cancel: boolean;
+  is_returned: boolean;
+  is_canceled: boolean;
+  merchant_order_id: any;
+  wallet_notification: any;
+  paid_amount_cents: number;
+  notify_user_with_email: boolean;
+  items: any[];
+  order_url: string;
+  commission_fees: number;
+  delivery_fees_cents: number;
+  delivery_vat_cents: number;
+  payment_method: string;
+  merchant_staff_tag: any;
+  api_source: string;
+  data: any;
+  token: string;
+  url: string;
+}

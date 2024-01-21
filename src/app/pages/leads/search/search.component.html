@@ -1,0 +1,400 @@
+<div>
+    <div class="relative flex h-full gap-5 sm:h-[calc(100vh_-_150px)]">
+        <div
+            class="overlay absolute z-[22] hidden h-full w-full rounded-md bg-black/60"
+            [ngClass]="{ '!block xl:!hidden': isShowSearchMenu }"
+            (click)="isShowSearchMenu = !isShowSearchMenu"
+        ></div>
+        <div
+            class="panel dark:gray-50 absolute z-[22] hidden h-full w-[300px] max-w-[calc(100vw_-_100px)] flex-none space-y-3 overflow-hidden p-3 ltr:rounded-r-none rtl:rounded-l-none xl:relative xl:block xl:h-auto ltr:xl:rounded-r-md rtl:xl:rounded-l-md"
+            [ngClass]="{ '!block': isShowSearchMenu }">
+            <form [formGroup]="LeadSearchForm" id="leadSearch" #leadSearchForm="ngForm">
+            <div class="flex h-full flex-col pb-20">
+                <ng-scrollbar class="relative h-full grow mb-10 mr-1" appearance="compact">
+                    <div class=" flex items-center justify-between mb-3">
+                        <h5 class="text-lg font-semibold dark:text-white-light">{{'Leads Filter'|translate}}</h5>
+                    </div>
+                    <ng-select
+                        [items]="SearchInLeadsTypesList"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Search In"
+                        bindLabel="value"
+                        bindValue="id"
+                        (change)="OnSelectSearchIn($event)"
+                        (clear)="onDeSelectSearchIn()"
+                        formControlName="SearchInLeadsTypes"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+                    <!-- *ngIf="SearchInLeadsTypes !=null && SearchInLeadsTypes?.value  !==null && SearchInLeadsTypes?.value[0]?.id =='0'" -->
+                    <ng-select
+                        
+                        formControlName="LeadSearchType"
+                        [items]="LeadSearchTypeList"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        bindLabel="value"
+                        bindValue="id"
+                        placeholder="Classification"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+            
+                    <ng-select
+                        [disabled]="LeadTypesList.length == 0"
+                        formControlName="LeadTypeId"
+                        (change)="onSelectLeadTypes($event)"
+                        (clear)="onDeSelectLeadTypes($event)"
+                        [items]="LeadTypesList"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Type"
+                        bindLabel="value"
+                        bindValue="id"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+            
+                    <ng-select
+                        [disabled]="LeadSourcesListForDropDown.length == 0 || isSelectedManyLeadTypes"
+                        formControlName="LeadSourceId"
+                        [items]="LeadSourcesListForDropDown"
+                        (change)="onSelectLeadSources($event)"
+                        (clear)="onDeSelectLeadSources($event)"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Source"
+                        bindLabel="value"
+                        bindValue="id"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+            
+                    <ng-select
+                        formControlName="StatusId"
+                        [items]="StatusList"
+                        (change)="onSelectStatus($event)"
+                        (clear)="onDeSelectStatus($event)"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Status"
+                        bindLabel="name"
+                        bindValue="id"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+            
+                    <input type="number" class="peer form-input ltr:pr-9 rtl:pl-9 mb-2" placeholder="Phone number" formControlName="ContactPhoneNumber" [(ngModel)]="searchtext" name="searchtext" />
+            
+                    <ng-select
+                        formControlName="CreatedById"
+                        [items]="usersList"
+                        (change)="onSelectCreatedBy($event)"
+                        (clear)="onDeSelectCreatedBy($event)"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Marketer"
+                        bindLabel="value"
+                        bindValue="id"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+            
+                    <!-- <input type="text" class="peer form-input ltr:pr-9 rtl:pl-9 mb-2" placeholder="Campaign" [(ngModel)]="searchtext" name="searchtext" /> -->
+                    <div class="h-px border-b border-[#e0e6ed] dark:border-[#1b2e4b] mb-2"></div>
+                    
+
+                    <ng-select
+                        [disabled]="governmentList.length == 0"
+                        (change)="onSelectGovernment($event)"
+                        (clear)="onDeSelectGovernment($event)"
+                        formControlName="GovernmentId"
+                        [items]="governmentList"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Government"
+                        bindLabel="value"
+                        bindValue="id"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+            
+                    <ng-select
+                        [disabled]="areaList.length == 0 || isSelectedManyGovernments"
+                        [items]="areaList"
+                        formControlName="AreaId"
+                        (change)="onSelectArea($event)"
+                        (clear)="onDeSelectArea($event)"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Area"
+                        bindLabel="value"
+                        bindValue="id"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+            
+                    <ng-select
+                        [disabled]="developerList.length == 0"
+                        [items]="developerList"
+                        formControlName="DeveloperId"
+                        (change)="onSelectDeveloper($event)"
+                        (clear)="onDeSelectDeveloper($event)"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Developer"
+                        bindLabel="value"
+                        bindValue="id"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+            
+                    <ng-select
+                        [disabled]="projectsListForDropDown.length == 0 || isSelectedManyDevelopers"
+                        [items]="projectsListForDropDown"
+                        formControlName="ProjectId"
+                        (change)="onSelectProject($event)"
+                        (clear)="onDeSelectProject($event)"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Project"
+                        bindLabel="value"
+                        bindValue="id"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+                    <hr class="mb-2">
+                    <ng-select
+                        [disabled]="usersList.length == 0"
+                        [items]="usersList"
+                        formControlName="AssignedToId"
+                        (change)="onSelectAssignedTo($event)"
+                        (clear)="onDeSelectAssignedTo($event)"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Sales"
+                        bindLabel="value"
+                        bindValue="id"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+                    <ng-select
+                        [disabled]="teamList.length == 0"
+                        formControlName="AssignedToTeamId"
+                        [items]="teamList"
+                        (change)="onSelectAssignedToTeam($event)"
+                        (clear)="onDeSelectAssignedToTeam($event)"
+                        [(ngModel)]="input4"
+                        [clearable]="true"
+                        [searchable]="true"
+                        placeholder="Team"
+                        notFoundText="No Data Found"
+                        class="custom-multiselect mb-2">
+                    </ng-select>
+            
+                    <div class="h-px border-b border-[#e0e6ed] dark:border-[#1b2e4b] mb-2"></div>
+                    <div class="flex items-center justify-between gap-1">
+                        <ng2-flatpickr [config]="basic" addClass="form-input" formControlName="CreatedOnDateFrom" placeholder="From"></ng2-flatpickr>
+                        <span class="custom-error mt-2" *ngIf="LeadSearchForm.hasError('dateRangeInvalid')">
+                            <p class="mb-0">Created From" date cannot be greater than "Created To" date</p>
+                          </span>
+                        <ng2-flatpickr [config]="basic" addClass="form-input" formControlName="CreatedOnDateTo" placeholder="To"></ng2-flatpickr>
+                    </div>
+                </ng-scrollbar>
+                <div class="absolute bottom-0 w-full mb-4 px-3 ltr:left-0 rtl:right-0">
+                    <button type="button" class="btn btn-primary w-full mb-2" (click)="SubmitLeadSearchForm()" >{{'Apply'|translate}}</button>
+                    <button type="button" class="btn btn-dark w-full" (click)="ResetLeadSearchForm()">{{'Reset'|translate}}</button>
+                </div>
+            </div>
+        </form>
+        </div>
+        <div class="panel h-full flex-1 overflow-x-hidden p-4">
+            <div class="flex h-full flex-col">
+                <ng-container >
+                    <div class="mb-5 flex gap-5 md:flex-row md:items-center">
+                        
+                        <div class="flex w-full items-center sm:w-auto">
+                            
+                            <div class="flex flex-wrap-reverse items-center justify-between gap-4 p-4 xl:w-0 xl:hidden">
+                
+                                <div class="flex w-full items-center justify-between sm:w-auto">
+                                    
+                                    <div class="flex items-center ">
+                                        <div class="ltr:mr-4 rtl:ml-4 xl:hidden">
+                                            <button type="button" class="underline-button" (click)="isShowSearchMenu = !isShowSearchMenu">
+                                                <icon-custom-filter/> <span class="text-[#000] hover:text-[#000] m-1">Filter</span> 
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ltr:mr-4 rtl:ml-4 hidden xl:block">
+                                <button type="button" ngxTippy="Refresh" class="underline-button">
+                                    <icon-plus-circle/> <span class="text-[#000] hover:text-[#000] m-1">New</span> 
+                                </button>
+                            </div>
+                            <div class="ltr:mr-4 rtl:ml-4 hidden xl:block">
+                                <button type="button" ngxTippy="Refresh" class="underline-button" >
+                                    <icon-user-plus/> <span class="text-[#000] hover:text-[#000] m-1">Assign</span> 
+                                </button>
+                            </div>
+                            <div class="ltr:mr-4 rtl:ml-4 hidden xl:block">
+                                <div hlMenu class="dropdown">
+                                    <button hlMenuButton type="button" class="underline-button">
+                                        <icon-checks/><span class="text-[#000] hover:text-[#000] m-1">Import/Export</span>
+                                    </button>
+                                    <ul *hlMenuItems @toggleAnimation class="whitespace-nowrap ltr:right-0 rtl:left-0">
+                                        <li>
+                                            <a href="javascript:;" *hlMenuItem="let menuItem" class="w-full" >
+                                                <icon-open-book class="shrink-0 ltr:mr-2 rtl:ml-2" />
+
+                                                Mark as Read
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" *hlMenuItem="let menuItem" class="w-full">
+                                                <icon-book class="shrink-0 ltr:mr-2 rtl:ml-2" />
+
+                                                Mark as Unread
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" *hlMenuItem="let menuItem" class="w-full">
+                                                <icon-trash-lines class="shrink-0 ltr:mr-2 rtl:ml-2" />
+
+                                                Trash
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                            <div class="ltr:mr-4 rtl:ml-4 hidden xl:block">
+                                <button type="button" ngxTippy="Refresh" class="underline-button" (click)="onDelete()">
+                                    <icon-trash-lines/> <span class="text-[#000] hover:text-[#000] m-1">Delete</span> 
+                                </button>
+                            </div>
+                           
+                        </div>
+            
+                        <div class="flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
+                            <div hlMenu class="dropdown w-full ">
+                                <button
+                                    hlMenuButton
+                                    type="button"
+                                    class="w-full flex items-center rounded-md border border-[#e0e6ed] px-4 py-2 text-sm font-semibold dark:border-[#253b5c] dark:bg-[#1b2e4b] dark:text-white-dark">
+                                    <span class="ltr:mr-1 rtl:ml-1">Columns</span>
+                                    <icon-caret-down class="h-5 w-5" />
+                                </button>
+                                <ul *hlMenuItems @toggleAnimation class="whitespace-nowrap rtl:left-3 ltr:right-3 ">
+                                    <ng-container *ngFor="let col of cols;index as i;">
+                                        <li>
+                                            <div class="flex items-center px-4 py-1 hover:text-primary">
+                                                <label [for]="'chk-' + i" class="mb-0 cursor-pointer">
+                                                    <input type="checkbox" [id]="'chk-' + i" class="form-checkbox" [(ngModel)]="!col.hide" (change)="updateColumn(col)" />
+                                                    <span class="ltr:ml-2 rtl:mr-2">{{ col.title }}</span>
+                                                </label>
+                                            </div> 
+                                        </li>
+                                    </ng-container>
+                                </ul>
+                            </div>
+                            <div class=" xl:hidden right-0 flex items-center gap-5 ltr:ml-auto rtl:mr-auto">
+                                <div hlMenu class="dropdown">
+                                    <button hlMenuButton type="button">
+                                        <icon-horizontal-dots class="rotate-90 opacity-70" />
+                                    </button>
+                                    <ul *hlMenuItems @toggleAnimation class="whitespace-nowrap ltr:right-0 rtl:left-0">
+                                        <li class="ltr:mr-4 rtl:ml-4">
+                                            <button type="button" ngxTippy="Refresh">
+                                                <icon-plus-circle/> <span class="text-[#000] hover:text-[#000] m-1">New</span> 
+                                            </button>
+                                        </li>
+                                        <li class="ltr:mr-4 rtl:ml-4">
+                                            <button type="button" ngxTippy="Refresh" >
+                                                <icon-user-plus/> <span class="text-[#000] hover:text-[#000] m-1">Assign</span> 
+                                            </button>
+                                        </li>
+                                        <li class="ltr:mr-4 rtl:ml-4">
+                                            <div hlMenu class="dropdown ">
+                                                <button hlMenuButton type="button" class="ltr:mr-4 ltr:ml-4 rtl:ml-4">
+                                                    <icon-checks/><span class="text-[#000] hover:text-[#000] m-1">Import/Export</span> <icon-caret-down class="h-5 w-5 rotate-270 m-1" />
+                                                </button>
+                                                <ul *hlMenuItems @toggleAnimation class="whitespace-nowrap ltr:right-0 rtl:left-0">
+                                                    <li>
+                                                        <a href="javascript:;" *hlMenuItem="let menuItem" class="w-full" >
+                                                            <icon-open-book class="shrink-0 ltr:mr-2 rtl:ml-2" />
+            
+                                                            Mark as Read
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" *hlMenuItem="let menuItem" class="w-full">
+                                                            <icon-book class="shrink-0 ltr:mr-2 rtl:ml-2" />
+            
+                                                            Mark as Unread
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" *hlMenuItem="let menuItem" class="w-full">
+                                                            <icon-trash-lines class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                                                            Trash
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                        </li>
+                                        <li class="ltr:mr-4 rtl:ml-4">
+                                            <button type="button" ngxTippy="Refresh" (click)="onDelete()">
+                                                <icon-trash-lines/> <span class="text-[#000] hover:text-[#000] m-1">Delete</span> 
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive min-h-[300px] grow overflow-y-auto">
+                        <div class="datatable">
+                            <ng-datatable
+                                [rows]="rows"
+                                [columns]="cols"
+                                [sortable]="true"
+                                [stickyHeader]="true"
+                                [hasCheckbox]="true"
+                                height="calc(100vh - 20rem)"
+                                width="100%"
+                                skin="whitespace-nowrap table-hover"
+                                firstArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+                                lastArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg> '
+                                previousArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+                                nextArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+                            >
+                                <ng-template slot="dob" let-value="data"> {{ formatDate(value.dob) }} </ng-template>
+                                <ng-template slot="isActive" let-value="data">
+                                    <span class="capitalize" [ngClass]="value.isActive ? 'text-success' : 'text-danger'">{{ value.isActive }}</span>
+                                </ng-template>
+                            </ng-datatable>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿<div [ngClass]="{ 'dark text-white-dark': store.semidark }">
+    <nav class="sidebar fixed top-0 bottom-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300">
+        <div class="h-full bg-white dark:bg-dark">
+            <div class="flex items-center justify-between px-4 py-3 pb-5 mb-5">
+                <a routerLink="/" class="main-logo flex shrink-0 items-center">
+                    <!-- <img class="ml-[5px] w-8 flex-none" src="/assets/images/logo.svg" alt="" /> -->
+                    <p class="ml-[5px]  flex-none align-middle text-2xl font-semibold ltr:ml-1.5 rtl:mr-1.5 dark:text-primary lg:inline opacity-100 ">Mb</p>
+                    <span class="align-middle text-2xl font-semibold ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light lg:inline">State</span>
+                </a>
+                <a
+                    href="javascript:;"
+                    class="collapse-icon flex h-8 w-8 items-center rounded-full transition duration-300 hover:bg-gray-500/10 hover:text-primary rtl:rotate-180 dark:text-white-light dark:hover:bg-dark-light/10"
+                    (click)="storeData.dispatch({ type: 'toggleSidebar'})"
+                >
+                <icon-carets-down class="m-auto rotate-90" />
+                </a>
+            </div>
+            <ng-scrollbar class="relative !h-[calc(100vh-80px)] pt-5" appearance="compact">
+                <ul class="relative space-y-0.5 p-4 py-0 font-semibold">
+                    <li class="nav-item">
+                        <ul>
+                           
+                       
+                            <li class="nav-item">
+                                <a routerLink="/dashboard" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <div class="flex items-center">
+                                        <!-- <icon-bar-chart></icon-bar-chart> -->
+                                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M6.55 14.7451H10.45C13.7 14.7451 15 13.4451 15 10.1951V6.29512C15 3.04512 13.7 1.74512 10.45 1.74512H6.55C3.3 1.74512 2 3.04512 2 6.29512V10.1951C2 13.4451 3.3 14.7451 6.55 14.7451Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path d="M10.5 12.7451C11.325 12.7451 12 12.122 12 11.3605V5.12973C12 4.36819 11.325 3.74512 10.5 3.74512C9.675 3.74512 9 4.36819 9 5.12973V11.3605C9 12.122 9.6675 12.7451 10.5 12.7451Z" fill="white"/>
+                                            <path d="M6.5 12.7451C7.325 12.7451 8 12.1451 8 11.4118V9.07845C8 8.34512 7.325 7.74512 6.5 7.74512C5.675 7.74512 5 8.34512 5 9.07845V11.4118C5 12.1451 5.6675 12.7451 6.5 12.7451Z" fill="white"/>
+                                            </svg>
+                                            
+
+                                        <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-white-light dark:group-hover:text-white-light"
+                                            >{{ 'Dashboard' | translate }}</span
+                                        >
+                                    </div>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a routerLink="/leads" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <div class="flex items-center">
+                                        <icon-box></icon-box>
+                                        <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-white-light dark:group-hover:text-white-light"
+                                            >{{ 'Leads' | translate }}</span
+                                        >
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </ng-scrollbar>
+        </div>
+    </nav>
+</div>
